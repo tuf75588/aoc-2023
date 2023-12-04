@@ -1,40 +1,19 @@
 const fs = require("fs");
 const path = require("path");
 
-const data = fs.readFileSync(path.resolve(__dirname, "./input.txt"), {
-  encoding: "utf-8",
-});
-const numbers = data
-  .trim()
-  .split("\n")
-  .map((x) => x.split(""));
-
-console.log(numbers);
-function extractAndConvertNumbers(element) {
-  // check at what position the numeric string is found at
-  
-  const numericString = element.replace(/[^0-9]/g, ""); // Remove non-numeric characters
-  const firstNumber = numericString.charAt(0);
-  const lastNumber = numericString.charAt(numericString.length - 1);
-  return [parseInt(firstNumber, 10), parseInt(lastNumber, 10)]; // Convert first and last digits to integers
+function partOne(file) {
+  const lines = fs.readFileSync(file, 'utf-8').trim().split('\n');
+  const values = lines.map((line) => {
+    let first = line.split('').find((v) => !Number.isNaN(Number(v)));
+    let last = line.split('').findLast((b) => !Number.isNaN(Number(b)));
+    return Number(first + last);
+  })
+  return values.reduce((a,c) => {
+    return a + c;
+  });
 }
 
-const resultArray = numbers
-  .map((innerArray) => innerArray.map(extractAndConvertNumbers).join(","))
-  .flat();
-
-const sums = resultArray.map((element) => {
-  const concatenatedNumber = element.replace(",", "");
-  return parseInt(concatenatedNumber, 10);
-});
-
-
-let total = 0;
-
-for (const sum of sums) {
-  total += sum; // 55017
-}
-
+console.log(partOne('./input.txt')); // 55017
 /* PART 2 */
 
 let legend = {
@@ -48,3 +27,8 @@ let legend = {
   eight: 8,
   nine: 9,
 };
+
+
+function partTwo(file) {
+  console.log(file);
+}
