@@ -29,4 +29,31 @@ function partOne(file) {
   return sets;
 }
 
-console.log(partOne('./input.txt'));
+// console.log(partOne('./input.txt'));
+
+/* PART TWO */
+
+function partTwo(file) {
+  let games = fs.readFileSync(file, 'utf-8').split('\n');
+  return games.map((a) => {
+    const maxCountPartTwo = {
+      red: 0,
+      green: 0,
+      blue: 0,
+    };
+    a.split(': ')[1]
+      .split('; ')
+      .forEach((set) => {
+        const pulls = set.split(', ');
+        return pulls.forEach((amount) => {
+          const [amt, color] = amount.split(' ');
+          if (maxCountPartTwo[color] < Number(amt)) {
+            maxCountPartTwo[color] = Number(amt);
+          }
+        });
+      });
+    return maxCountPartTwo.blue * maxCountPartTwo.green * maxCountPartTwo.red;
+  }).reduce((a,b) => a + b);
+}
+
+console.log(partTwo('./input.txt'));
