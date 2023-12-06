@@ -8,7 +8,20 @@ function partOne(file) {
   // find out if the next line has an integer <= the index of the dot on the upper line
   // if so, add to part list
   // if not, continue
+  //
 
-  console.log(lines)
+  const getNumbers = (lines) => {
+    return lines.map((line, rowIdx) => {
+      return line.split('').map((char, colIdx) => {
+        return {
+          char, 
+          rowIdx,
+          colIdx
+        }
+      })
+    });
+  };
+  return getNumbers(lines);
 }
-partOne('./example-input.txt')
+
+console.log(partOne('./example-input.txt'));
