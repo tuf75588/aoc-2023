@@ -11,17 +11,34 @@ function partOne(file) {
   //
 
   const getNumbers = (lines) => {
-    return lines.map((line, rowIdx) => {
-      return line.split('').map((char, colIdx) => {
-        return {
-          char, 
-          rowIdx,
-          colIdx
-        }
+    return lines
+      .map((line, rowIdx) => {
+        return line.split('').map((char, colIdx) => {
+          return {
+            char,
+            rowIdx,
+            colIdx,
+          };
+        });
       })
-    });
+      .flatMap((items) => {
+        const results = [];
+        let num = null;
+        for (const [index, item] of items.entries()) {
+          const { char } = item;
+
+          if (!isNaN(Number(char))) {
+            if (num) {
+              results.push(num);
+              num = null;
+            }
+            continue;
+          }
+        }
+        return items;
+      });
   };
   return getNumbers(lines);
 }
 
-console.log(partOne('./example-input.txt'));
+partOne('./example-input.txt');
