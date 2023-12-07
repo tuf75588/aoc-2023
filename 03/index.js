@@ -82,27 +82,61 @@ function partOne(file) {
 
 function getGears(lines) {
   return lines
-    .flatMap((chars, rowIndex) => {
-      return chars.split('').map((char, colIndex) => {
-        return { char, rowIndex, colIndex };
+    .flatMap((chars, rowIdx) => {
+       return chars.split('').map((char, colIdx) => {
+        return { char, rowIdx, colIdx };
       });
     })
     .filter((item) => item.char === '*');
 }
 
-console.log(partOne('./input.txt'));
 
-// console.log(getGears(fs.readFileSync('./example-input.txt', 'utf-8').trim().split('\n')));
 
 function getRatios(gears, numbers) {
   const results = [];
 
   for (const gear of gears) {
     // destructure
-    const {rowIdx: gearRowIndex, colIdx: gearColumnIndex} = gear;
+    const { rowIdx: gearRowIndex, colIdx: gearColumnIndex } = gear;
     const rowBeforeGear = gearRowIndex - 1;
     const rowAfterGear = gearRowIndex + 1;
     const colBeforeGear = gearColumnIndex - 1;
-    const columnsAfterIndex = gearColumnIndex + 1;
+    const columnsAfterGear = gearColumnIndex + 1;
+
+    const adjacentNumbers = [];
+
+    for (let rowIdx = rowBeforeGear; rowIdx <= rowAfterGear; rowIdx++) {
+      for (let colIdx = colBeforeGear; colIdx <= columnsAfterGear; colIdx++) {
+        for (const num of numbers) {
+          if (num.rowIdx === rowIdx) {
+            const start = num.colIdx;
+            const end = num.colIdx + num.char.length - 1;
+
+            if (start <= colIdx && colIdx <= end) {
+              if (!adjacentNumbers.includes(num)) {
+                adjacentNumbers.push(num);
+              }
+            }
+          }
+        }
+      }
+    }
+    if (adjacentNumbers.length === 2) {
+      const [first, second] = adjacentNumbers.map((item) => parseInt(item.char, 10));
+      results.push(first * second);
+    }
   }
+  return results;
 }
+
+function solution2(input) {
+  const lines = fs.readFileSync(input, 'utf-8').trim().split('\n');
+  const numbers = getNumbers(lines);
+  const gears = getGears(lines);
+  const ratios = getRatios(gears, numbers);
+
+  return addArray(ratios);
+}
+
+
+console.log(solution2('./input.txt'));  // 83279367
