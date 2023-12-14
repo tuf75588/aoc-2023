@@ -52,7 +52,7 @@ function solution1() {
 console.log(solution1());
 
 function part2() {
-  const scrarchcards = format('./example-input.txt');
+  const scratchcards = format('./input.txt');
   const copyQuantitiesById = {};
 
   function processCard(card, cardIdx) {
@@ -61,7 +61,27 @@ function part2() {
     let i = 0;
     for (i; i < matches.size; i++) {
       let nextIdx= cardIdx + 1 + i;
+      let id = scratchcards[nextIdx].id;
+
+      if (!copyQuantitiesById[id]) {
+        copyQuantitiesById[id] = 0;
+      }
+      copyQuantitiesById[id]++;
     }
   }
 
+  let cardIdx = 0;
+  for (cardIdx; cardIdx < scratchcards.length; cardIdx++) {
+    let original = scratchcards[cardIdx];
+    let copies = copyQuantitiesById[original.id] ?? 0;
+    let total = 1 + copies;
+
+    for (let i = 0; i < total; i++) {
+      processCard(original, cardIdx)
+    }
+
+  }
+  return scratchcards.length + Object.values(copyQuantitiesById).reduce((a,b) => a + b);
 }
+
+console.log(part2())
