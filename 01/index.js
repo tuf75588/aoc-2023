@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = require('path');
+;
 
 function partOne(file) {
   const lines = fs.readFileSync(file, 'utf-8').trim().split('\n');
