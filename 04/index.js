@@ -49,7 +49,6 @@ function solution1() {
 }
 
 
-console.log(solution1());
 
 function part2() {
   const scratchcards = format('./input.txt');
