@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from "fs";
 
 function addArray(array) {
   return array.reduce((a, b) => a + b);
@@ -7,7 +7,7 @@ function addArray(array) {
 const getNumbers = (lines) => {
   return lines
     .map((line, rowIdx) => {
-      return line.split('').map((char, colIdx) => {
+      return line.split("").map((char, colIdx) => {
         return {
           char,
           rowIdx,
@@ -65,7 +65,7 @@ function findAdjacentSymbol(lines, value) {
 }
 
 function partOne(file) {
-  const lines = fs.readFileSync(file, 'utf-8').trim().split('\n');
+  const lines = fs.readFileSync(file, "utf-8").trim().split("\n");
   const numbers = getNumbers(lines);
   const adjacentNumbers = numbers.filter((item) => {
     return findAdjacentSymbol(lines, item);
@@ -83,14 +83,12 @@ function partOne(file) {
 function getGears(lines) {
   return lines
     .flatMap((chars, rowIdx) => {
-       return chars.split('').map((char, colIdx) => {
+      return chars.split("").map((char, colIdx) => {
         return { char, rowIdx, colIdx };
       });
     })
-    .filter((item) => item.char === '*');
+    .filter((item) => item.char === "*");
 }
-
-
 
 function getRatios(gears, numbers) {
   const results = [];
@@ -122,7 +120,9 @@ function getRatios(gears, numbers) {
       }
     }
     if (adjacentNumbers.length === 2) {
-      const [first, second] = adjacentNumbers.map((item) => parseInt(item.char, 10));
+      const [first, second] = adjacentNumbers.map((item) =>
+        parseInt(item.char, 10)
+      );
       results.push(first * second);
     }
   }
@@ -130,7 +130,7 @@ function getRatios(gears, numbers) {
 }
 
 function solution2(input) {
-  const lines = fs.readFileSync(input, 'utf-8').trim().split('\n');
+  const lines = fs.readFileSync(input, "utf-8").trim().split("\n");
   const numbers = getNumbers(lines);
   const gears = getGears(lines);
   const ratios = getRatios(gears, numbers);
@@ -138,5 +138,4 @@ function solution2(input) {
   return addArray(ratios);
 }
 
-
-console.log(solution2('./input.txt'));  // 83279367
+console.log(solution2("./input.txt")); // 83279367

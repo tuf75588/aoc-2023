@@ -1,19 +1,19 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 function getInput(dir) {
-  return fs.readFileSync(path.resolve(dir, "./input.txt"), {
-    encoding: "utf-8",
+  return fs.readFileSync(path.resolve(dir, './input.txt'), {
+    encoding: 'utf-8',
   });
 }
 
 const data = getInput(__dirname);
 
 const formatInputPart1 = (input) => {
-  const [seeds, ...maps] = input.trim().split("\n\n");
+  const [seeds, ...maps] = input.trim().split('\n\n');
 
   return {
-    seeds: seeds.split(": ").at(1).split(" ").map(Number),
+    seeds: seeds.split(': ').at(1).split(' ').map(Number),
     maps: maps.map(parseMap),
   };
 };
@@ -61,11 +61,11 @@ class RangeGroup {
 
 const parseMap = (section) => {
   const ranges = section
-    .split("map:")
+    .split('map:')
     .at(1)
     .trim()
-    .split("\n")
-    .map((line) => line.split(" ").map(Number));
+    .split('\n')
+    .map((line) => line.split(' ').map(Number));
   const rangeMaps = ranges
     .map((range) => new RangeMap(...range))
     .sort((a, b) => a.start - b.start);
@@ -90,7 +90,7 @@ function solution1(input) {
 }
 
 function makeSeedRanges(seeds) {
-  const nums = seeds.split(": ")[1].split(" ").map(Number);
+  const nums = seeds.split(': ')[1].split(' ').map(Number);
   const result = [];
 
   while (nums.length) {
@@ -105,11 +105,11 @@ function makeSeedRanges(seeds) {
 
 function parseMapsReverse(section) {
   const ranges = section
-    .split("map:")
+    .split('map:')
     .at(1)
     .trim()
-    .split("\n")
-    .map((line) => line.split(" ").map(Number));
+    .split('\n')
+    .map((line) => line.split(' ').map(Number));
 
   // We're reversing the maps in part 2
   const rangeMaps = ranges
@@ -120,7 +120,7 @@ function parseMapsReverse(section) {
 }
 
 function formatInputPart2(input) {
-  const [seeds, ...maps] = input.trim().split("\n\n");
+  const [seeds, ...maps] = input.trim().split('\n\n');
 
   return {
     seeds: makeSeedRanges(seeds),

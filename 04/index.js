@@ -1,20 +1,20 @@
-import fs from "fs";
+import fs from 'fs';
 
 function formatInput(file) {
-  return fs.readFileSync(file, "utf-8").trim().split("\n");
+  return fs.readFileSync(file, 'utf-8').trim().split('\n');
 }
 
 function format(lines) {
   const games = formatInput(lines).map((line, lineIdx) => {
-    const [cardNumber, numbers] = line.split(": ");
+    const [cardNumber, numbers] = line.split(': ');
 
-    const [winnersStr, yoursStr] = numbers.split(" | ");
+    const [winnersStr, yoursStr] = numbers.split(' | ');
 
     // formatting
     return {
-      id: cardNumber.replace(/Card\s+/, ""),
-      winners: new Set(winnersStr.split(" ").filter(Boolean).map(Number)),
-      yours: new Set(yoursStr.split(" ").filter(Boolean).map(Number)),
+      id: cardNumber.replace(/Card\s+/, ''),
+      winners: new Set(winnersStr.split(' ').filter(Boolean).map(Number)),
+      yours: new Set(yoursStr.split(' ').filter(Boolean).map(Number)),
     };
   });
   return games;
@@ -42,13 +42,13 @@ function getWorth(set) {
 }
 
 function solution1() {
-  const scratchcards = format("./input.txt");
+  const scratchcards = format('./input.txt');
   const vals = scratchcards.map(findMatches).map(getWorth);
   return vals.reduce((a, b) => a + b);
 }
 
 function part2() {
-  const scratchcards = format("./input.txt");
+  const scratchcards = format('./input.txt');
   const copyQuantitiesById = {};
 
   function processCard(card, cardIdx) {

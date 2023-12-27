@@ -1,6 +1,4 @@
 const fs = require('fs');
-;
-
 function partOne(file) {
   const lines = fs.readFileSync(file, 'utf-8').trim().split('\n');
   const values = lines.map((line) => {
@@ -70,10 +68,12 @@ function partTwo(file) {
       .reverse()
       .join('')
       .match(lastNumberWordsRegExp);
-    let lastWordNumberIndex = lastWordMatch ? line.length - 1 - lastWordMatch.index : null;
+    let lastWordNumberIndex = lastWordMatch
+      ? line.length - 1 - lastWordMatch.index
+      : null;
     let lastNumber =
       lastNumberIndex !== -1
-        ? lastWordMatch 
+        ? lastWordMatch
           ? lastNumberIndex > lastWordNumberIndex
             ? line[lastNumberIndex]
             : legend[lastWordMatch[0].split('').reverse().join('')]
