@@ -54,3 +54,8 @@ function solution1(input) {
 }
 
 console.log(solution1(data));
+
+
+function solution2(input) {
+  
+}
